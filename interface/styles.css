@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap');
+.container{
+    max-width: 750px;
+    margin: auto;
+    text-align: center;
+    display: block;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.compile{
+    border-radius: 5px;
+    border-color: black;
+    border-width: 1px;
+    background-color: green;
+    color: white;
+    padding: 10px 10px;
+    cursor: pointer;
+}
+.compile:hover{
+    opacity: 0.5;
+}
+body{
+    background: rgb(233, 232, 232);
+}
+textarea{
+    background-color: rgb(41, 39, 39);
+    color: white;
+    font-family: 'Anonymous Pro', monospace;
+    font-size:large;
+}
+.input-part{
+    margin: auto;
+    padding: 15px;
+}
+.input-part  div{
+    margin-bottom: 10px;
+}
+.code-part{
+    margin: auto;
+    padding: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
