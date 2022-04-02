@@ -6,7 +6,7 @@
     display: block;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-.compile{
+.compile_button{
     border-radius: 5px;
     border-color: black;
     border-width: 1px;
@@ -15,7 +15,7 @@
     padding: 10px 10px;
     cursor: pointer;
 }
-.compile:hover{
+.compile_button:hover{
     opacity: 0.5;
 }
 body{
