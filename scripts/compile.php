@@ -6,6 +6,6 @@ function compile()
 	return $output;
 }
 
-compile();
+echo compile();
 ?>
 
