@@ -30,7 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $file_code = '/home/ivan-arhipych/Web-interface-Baikal/executable_code/code.c';
   file_put_contents($file_code, $request_json->code);
 
-  echo "aaa";
   echo compile();
   echo send();
   echo execute();
