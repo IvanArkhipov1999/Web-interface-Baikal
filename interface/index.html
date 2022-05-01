@@ -4,6 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <title>Байкал</title>
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.js"></script>
+    <script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/javascript/javascript.min.js">
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/mode/clike/clike.js">
+</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/eclipse.css">
+
     <link rel="stylesheet" href="styles.css" />
     <script type="text/javascript" src="js/frontend.js"></script> 
 </head>
@@ -17,10 +28,9 @@
         <div class="code-part">
             <form>
                 Введите в окне код вашей программы на языке C
-                <textarea name="code" cols="70" rows="20"></textarea>
-                <input type="reset" value="Очистить">
-
+                <textarea id="code-editor" cols="70" rows="20"></textarea>
             </form>
+            <script src="js/editor.js"></script>
         </div>
         <div class="input-part">
             <form action="/">
