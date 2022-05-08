@@ -10,28 +10,33 @@
 
 <body>
     <div class="container">
-        <h2>
-            Веб-интерфейс Baikal
-        </h2>
+        <div class="header">
+            <h2>
+                Web-Interface Baikal
+            </h2>
+        </div>
         <hr />
         <div class="code-part">
             <form>
                 Введите в окне код вашей программы на языке C
                 <textarea name="code" cols="70" rows="20"></textarea>
-                <input type="reset" value="Очистить">
-
             </form>
+        </div>
+        <div>
+            <button class="btn reset">Очистить</button>
         </div>
         <div class="input-part">
             <form action="/">
                 <div>Введите входные данные
                     <textarea name="input_data" cols="70" rows="5"></textarea>
-                    <input type="reset" value="Очистить">
+                    <input type="reset" class="btn reset" value="Очистить">
                 </div>
             </form>
         </div>
+        <div>
+            <button class ="btn compile" onclick="compileRemotely()">Compile</button>
+        </div>
 	<div class="output">
-            <button class ="compile_button" onclick="compileRemotely()">Compile</button>
 	    <p id="output">
                 The program output will be displayed here            
 	    </p>
