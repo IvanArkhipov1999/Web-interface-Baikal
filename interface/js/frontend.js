@@ -1,4 +1,4 @@
-const backendUrl = 'php/stub.php'
+const backendUrl = 'php/backend.php'
 
 function assembleRequestContent() {
     codeEditor.save();
