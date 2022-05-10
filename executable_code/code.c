@@ -1,10 +1,13 @@
 #include <stdio.h>
 
-int main() 
+int main(int argc, char* argv[]) 
 {
-	int i = 10, j = 6;
+	int i = 0;
 
-	printf("%i %i\n", i, j);
+	for (i = 0; i < argc; i++)
+	{
+		printf("%i %s END\n", argc, argv[i]);
+	}
 
 	return 0;
 }
