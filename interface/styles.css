@@ -109,4 +109,6 @@ textarea{
 }
 .compile:hover{
     box-shadow: 0 0 0px 40px #3ce78c inset;
+.CodeMirror {
+    text-align: left!important;
 }

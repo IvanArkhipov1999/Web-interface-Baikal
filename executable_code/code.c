@@ -2,7 +2,7 @@
 
 int main() 
 {
-	int i = 5, j = 6;
+	int i = 10, j = 6;
 
 	printf("%i %i\n", i, j);
 
