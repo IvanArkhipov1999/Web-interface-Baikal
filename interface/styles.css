@@ -39,3 +39,6 @@ textarea{
     padding: 15px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+.CodeMirror {
+    text-align: left!important;
+}
