@@ -1,7 +1,8 @@
-const backendUrl = 'php/stub.php'
+const backendUrl = 'php/backend.php'
 
 function assembleRequestContent() {
-    const programCode = document.getElementsByName('code')[0].value;
+    codeEditor.save();
+    const programCode = document.getElementById('code-editor').value;
     const programInput = document.getElementsByName('input_data')[0].value;
 
     var content = {};
