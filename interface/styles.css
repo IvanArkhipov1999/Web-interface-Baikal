@@ -110,3 +110,12 @@ textarea{
 .compile:hover{
     box-shadow: 0 0 0px 40px #3ce78c inset;
 }
+.CodeMirror {
+    text-align: left!important;
+}
+.github_ref_btn{
+    padding-left : 32px;
+    padding-top : 10px;
+    padding-bottom : 10px;
+    background-repeat : no-repeat;
+}
