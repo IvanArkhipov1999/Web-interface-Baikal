@@ -1,10 +1,5 @@
-#include <stdio.h>
-
-int main() 
+void main()
 {
-	int i = 10, j = 6;
-
-	printf("%i %i\n", i, j);
-
-	return 0;
+  printf("here1\n");
+  return 0;
 }
