@@ -21,15 +21,21 @@
 
 <body>
     <div class="container">
+        <div class="contacts">
+            <a class="github_ref_btn" target="_blank" href="https://github.com/IvanArkhipov1999/Web-interface-Baikal">
+                <img src="GitHub-Mark.png" width="40" height="40">
+            </a>
+        </div>
+        <hr />
         <div class="header">
             <h2>
                 Web-Interface Baikal
             </h2>
         </div>
-        <hr />
         <div class="code-part">
             <form>
                 Введите в окне код вашей программы на языке C
+                <p></p>
                 <textarea id="code-editor" cols="70" rows="20"></textarea>
             </form>
             <script src="js/editor.js"></script>
@@ -40,6 +46,7 @@
         <div class="input-part">
             <form action="/">
                 <div>Введите входные данные
+                    <p></p>
                     <textarea name="input_data" cols="70" rows="5"></textarea>
                     <input type="reset" class="btn reset" value="Очистить">
                 </div>
@@ -50,7 +57,9 @@
         </div>
 	<div class="output">
 	    <p id="output">
-                The program output will be displayed here            
+            <textarea name="ouput-part" cols="70" rows="5">
+                The program output will be displayed here
+            </textarea>   
 	    </p>
         </div>
     </div>
