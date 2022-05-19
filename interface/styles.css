@@ -113,3 +113,12 @@ textarea{
 .CodeMirror {
     text-align: left!important;
 }
+.CodeMirror {
+    text-align: left!important;
+}
+.github_ref_btn{
+    padding-left : 32px;
+    padding-top : 10px;
+    padding-bottom : 10px;
+    background-repeat : no-repeat;
+}
