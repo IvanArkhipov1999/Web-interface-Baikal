@@ -4,6 +4,9 @@ $file_bin = '/home/ivan-arhipych/Web-interface-Baikal/executable_code/code';
 
 $input;
 
+$queue_code = new SplQueue();
+$queue_input = new SplQueue();
+
 function compile()
 {
 	global $file_code, $file_bin;
@@ -34,8 +37,13 @@ function execute()
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$request_json = json_decode(file_get_contents('php://input'));
 
-	file_put_contents($file_code, $request_json->code);
-	$input = $request_json->input;
+	$queue_code->enqueue($request_json->code);
+	$queue_input->enqueue($request_json->input);
+}
+
+while (!$queue_code->isEmpty() && !$queue_input->isEmpty()) {
+	file_put_contents($file_code, $queue_code->dequeue());
+	$input = $queue_input->dequeue();
 
 	$output_compile = compile();
 	if ($output_compile == "") {
@@ -47,4 +55,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		echo $output_compile;
 	}
 }
+
 ?>
