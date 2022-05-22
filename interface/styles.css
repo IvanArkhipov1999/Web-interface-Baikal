@@ -6,7 +6,9 @@
     display: block;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-
+html{
+    scroll-behavior: smooth;
+}
 body{
     background: rgb(233, 232, 232);
 }
@@ -19,7 +21,7 @@ textarea{
 .header {
     padding: 50px 20px;
     text-align: center;
-  }
+}
 .header h2 {
     font-family: 'IBM Plex Sans', sans-serif;
     position: relative;
@@ -86,7 +88,7 @@ textarea{
     text-transform: uppercase;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-  }
+}
 .btn:hover, .btn:focus {
     color: #fff;
     outline: 0;
@@ -99,7 +101,6 @@ textarea{
 .reset:hover {
     box-shadow: 0 0 0px 40px #e74c3c inset;
 }
-
 .compile{
     margin: auto;
     -webkit-transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
@@ -109,8 +110,6 @@ textarea{
 }
 .compile:hover{
     box-shadow: 0 0 0px 40px #3ce78c inset;
-.CodeMirror {
-    text-align: left!important;
 }
 .CodeMirror {
     text-align: left!important;
@@ -120,4 +119,36 @@ textarea{
     padding-top : 10px;
     padding-bottom : 10px;
     background-repeat : no-repeat;
+}
+.up_button{
+    width:10px;
+    display: inline-block;
+    background:white;
+    border: 1px #8b8b8b;
+    text-align:center;
+    padding:10px;
+    position:fixed;
+    bottom:50px;
+    right:50px;
+    cursor:pointer;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+}
+.down_button{
+    width:10px;
+    display: inline-block;
+    background:white;
+    border: 1px #8b8b8b;
+    text-align:center;
+    padding:10px;
+    position:fixed;
+    bottom:50px;
+    right:10px;
+    cursor:pointer;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
 }
