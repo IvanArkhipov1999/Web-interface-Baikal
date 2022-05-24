@@ -3,4 +3,11 @@ var codeEditor = CodeMirror.fromTextArea(document.getElementById("code-editor"),
   lineNumbers: true,
   tabSize: 2
 });
-codeEditor.setValue("int main()\n{\n  return 0;\n}\n");
+codeEditor.setValue(
+    "#include <stdio.h>\n" +
+    "\n" +
+    "int main()\n" +
+    "{\n" +
+    "  printf(\"Hello, World!\\n\");\n" +
+    "  return 0;\n" +
+    "}");
