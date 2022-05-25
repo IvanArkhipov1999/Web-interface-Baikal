@@ -8,28 +8,31 @@ const port = 3000;
 app.use(express.static('public'))
 
 app.post('/code_task', function(req, res){
-    const code_dir = `${__dirname}/executable_code`;
-    const code_file = `${code_dir}/code.c`;
-    const bin_file = `${code_dir}/code`;
+    try {
+        const code_dir = `${__dirname}/executable_code`;
+        const code_file = `${code_dir}/code.c`;
+        const bin_file = `${code_dir}/code`;
 
-    let user_program = '';
-    req.on('data', chunk => {
-        user_program += chunk;
-    });
-    req.on('end', () => {
-        user_program = JSON.parse(user_program);
-        console.log('Got user program: ' + user_program.code);
+        let user_program = '';
+        req.on('data', chunk => {
+            user_program += chunk;
+        });
+        req.on('end', () => {
+            user_program = JSON.parse(user_program);
+            console.log('Got user program: ' + user_program.code);
 
-        fs.mkdirSync(code_dir, { recursive: true });
-        fs.writeFileSync(code_file, user_program.code, 'utf8');
+            fs.mkdirSync(code_dir, {recursive: true});
+            fs.writeFileSync(code_file, user_program.code, 'utf8');
 
-        compile_and_run(code_file, bin_file, user_program.input, res);
-    });
+            compile_and_run(code_file, bin_file, user_program.input, res);
+        });
+    } catch (error) {
+        console.log('Internal error: ' + error.message);
+        res.status(500).send("Internal error: " + error.message);
+    }
 })
 
-module.exports = app.listen(port, () =>
-    console.log('Example app listening on port 3000!')
-)
+module.exports = app;
 
 function process_error(error, stderr, res) {
     let message;

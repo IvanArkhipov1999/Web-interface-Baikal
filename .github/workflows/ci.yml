@@ -18,7 +18,8 @@ jobs:
           node-version: "14.x"
 
       - name: Install dependencies
-        run: npm install
+        run: npm install |
+          sudo apt-get install clang
 
       - name: Run test
         run: npm test
