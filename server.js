@@ -1,13 +1,84 @@
 const express = require('express');
 const app = express();
+var session = require('express-session');
+var hash = require('pbkdf2-password')();
+
 const fs = require('fs')
 
 const { exec } = require('child_process');
-const port = 3000;
+const path = require("path");
 
-app.use(express.static('public'))
+app.use(express.urlencoded({ extended: false }))
+app.use(session({
+    resave: false,
+    saveUninitialized: false,
+    secret: 'shhhh, very secret'
+}));
 
-app.post('/code_task', function(req, res){
+app.get('/', function(req, res){
+    res.redirect('/login');
+});
+
+app.use('/public', express.static('public'));
+
+app.get('/login', function(req, res){
+    res.sendFile(path.join(__dirname, '/public/1.html'));
+});
+
+app.post('/login', function (req, res, next) {
+    authenticate(req.body.login, req.body.password, function(err, user){
+        if (err) return next(err)
+        if (user) {
+            req.session.regenerate(function(){
+                req.session.user = user;
+                req.session.success = 'Authenticated as ' + user.name;
+                res.redirect('/code_task');
+            });
+        } else {
+            req.session.error = 'Authentication failed, please check your '
+                + ' username and password.'
+                + ' (use "tj" and "foobar")';
+            res.redirect('/login');
+        }
+    });
+});
+
+function restrict(req, res, next) {
+    if (req.session.user) {
+        next();
+    } else {
+        req.session.error = 'Access denied!';
+        res.redirect('/login');
+    }
+}
+
+var users_db = {
+    'admin': { name: 'admin' }
+};
+
+hash({ password: '11111111' }, function (err, pass, salt, hash) {
+    if (err) throw err;
+    users_db.admin.salt = salt;
+    users_db.admin.hash = hash;
+});
+
+function authenticate(login, pass, fn) {
+    if (!module.parent) console.log('authenticating %s:%s', login, pass);
+    var user = users_db[login];
+    if (!user) return fn(null, null)
+
+    hash({ password: pass, salt: user.salt }, function (err, pass, salt, hash) {
+        if (err) return fn(err);
+        if (hash === user.hash) return fn(null, user)
+        fn(null, null)
+    });
+}
+
+app.get('/code_task', restrict, function(req, res) {
+    res.sendFile(path.join(__dirname, 'index.html'));
+})
+
+app.post('/code_task', restrict, function(req, res){
     try {
         const code_dir = `${__dirname}/executable_code`;
         const code_file = `${code_dir}/code.c`;
