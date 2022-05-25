@@ -4,23 +4,24 @@ const fs = require('fs')
 
 const { exec } = require('child_process');
 const port = 3000;
-const code_dir = 'executable_code'
 
 app.use(express.static('public'))
 
 app.post('/code_task', function(req, res){
-    let code_file = `${__dirname}/${code_dir}/code.c`;
-    let bin_file = `${__dirname}/${code_dir}/code`;
+    const code_dir = `${__dirname}/executable_code`;
+    const code_file = `${code_dir}/code.c`;
+    const bin_file = `${code_dir}/code`;
 
     let user_program = '';
     req.on('data', chunk => {
         user_program += chunk;
     });
     req.on('end', () => {
-        user_program = JSON.parse(user_program)
+        user_program = JSON.parse(user_program);
         console.log('Got user program: ' + user_program.code);
 
-        fs.writeFileSync(code_file, user_program.code, 'utf8')
+        fs.mkdirSync(code_dir, { recursive: true });
+        fs.writeFileSync(code_file, user_program.code, 'utf8');
 
         compile_and_run(code_file, bin_file, user_program.input, res);
     });
@@ -48,7 +49,7 @@ function compile_and_run(file_code, file_bin, input, res) {
     exec(`clang -static ${file_code} -o ${file_bin} -lm`, (error, stdout, stderr) => {
         if (error || stderr) {
             process_error(error, stderr, res);
-            return
+            return;
         }
 
         console.log('COMPILED');
@@ -60,11 +61,11 @@ function send_stub(file_bin, input, res) {
     exec('echo place-your-sending-script-here', (error, stdout, stderr) => {
         if (error || stderr) {
             process_error(error, stderr, res);
-            return
+            return;
         }
 
-        console.log('SENT')
-        run_stub(file_bin, input, res)
+        console.log('SENT');
+        run_stub(file_bin, input, res);
     });
 }
 
@@ -72,10 +73,10 @@ function run_stub(file_bin, input, res) {
     exec(`${file_bin} ${input}`, (error, stdout, stderr) => {
         if (error || stderr) {
             process_error(error, stderr, res);
-            return
+            return;
         }
 
-        console.log('RUN')
+        console.log('RUN');
         res.writeHead(200, {'Content-Type': 'text'});
         res.write(stdout);
         res.end();

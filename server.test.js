@@ -11,8 +11,8 @@ const code = "#include <stdio.h>\n" +
     "  else \n" +
     "    printf(\"Hello, World!\\n\");\n" +
     "  return 0;\n" +
-    "}"
-const input = "Maxim"
+    "}";
+const input = "Maxim";
 
 describe('/code_task endpoint', () => {
     it('should compile and execute properly', async () => {
