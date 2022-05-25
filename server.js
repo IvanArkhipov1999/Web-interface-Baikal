@@ -57,7 +57,7 @@ function run_stub(file_bin, input, res) {
 http.createServer(function (req, res) {
 
     if (req.url.indexOf('.html') !== -1) {
-        fs.readFile(__dirname + '/index.html', function(err, html) {
+        fs.readFile(__dirname + '/public/index.html', function(err, html) {
             if (err) console.log(err)
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.write(html);
@@ -66,7 +66,7 @@ http.createServer(function (req, res) {
     }
 
     if (req.url.indexOf('.css') !== -1) {
-        fs.readFile(__dirname + '/styles.css', function(err, css) {
+        fs.readFile(__dirname + '/public/styles.css', function(err, css) {
             if (err) console.log(err)
             res.writeHead(200, {'Content-Type': 'text/css'});
             res.write(css);
@@ -75,7 +75,7 @@ http.createServer(function (req, res) {
     }
 
     if (req.url.indexOf('frontend.js') !== -1) {
-        fs.readFile(__dirname + '/js/frontend.js', function(err, js) {
+        fs.readFile(__dirname + '/public/frontend.js', function(err, js) {
             if (err) console.log(err)
             res.writeHead(200, {'Content-Type': 'text/js'});
             res.write(js);
@@ -84,7 +84,7 @@ http.createServer(function (req, res) {
     }
 
     if (req.url.indexOf('editor.js') !== -1) {
-        fs.readFile(__dirname + '/js/editor.js', function(err, js) {
+        fs.readFile(__dirname + '/public/editor.js', function(err, js) {
             if (err) console.log(err)
             res.writeHead(200, {'Content-Type': 'text/js'});
             res.write(js);
@@ -93,7 +93,7 @@ http.createServer(function (req, res) {
     }
 
     if (req.url.indexOf('.png') !== -1) {
-        fs.readFile(__dirname + '/GitHub-Mark.png', function(err, img) {
+        fs.readFile(__dirname + '/public/GitHub-Mark.png', function(err, img) {
             if (err) console.log(err)
             res.writeHead(200, {'Content-Type': 'image/png'});
             res.write(img);
