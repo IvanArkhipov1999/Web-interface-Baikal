@@ -1,5 +1,7 @@
-const http = require('http'),
-    fs = require('fs');
+const express = require('express');
+const app = express();
+const fs = require('fs')
+
 const { exec } = require('child_process');
 
 function process_error(error, stderr, res) {
@@ -16,7 +18,7 @@ function process_error(error, stderr, res) {
     res.end();
 }
 
-function compile(file_code, file_bin, input, res) {
+function compile_and_run(file_code, file_bin, input, res) {
     exec(`clang -static ${file_code} -o ${file_bin} -lm`, (error, stdout, stderr) => {
         if (error || stderr) {
             process_error(error, stderr, res);
@@ -54,68 +56,29 @@ function run_stub(file_bin, input, res) {
     });
 }
 
-http.createServer(function (req, res) {
+const port = 3000;
+const code_dir = 'executable_code'
 
-    if (req.url.indexOf('.html') !== -1) {
-        fs.readFile(__dirname + '/public/index.html', function(err, html) {
-            if (err) console.log(err)
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.write(html);
-            res.end();
-        });
-    }
+app.use(express.static('public'))
 
-    if (req.url.indexOf('.css') !== -1) {
-        fs.readFile(__dirname + '/public/styles.css', function(err, css) {
-            if (err) console.log(err)
-            res.writeHead(200, {'Content-Type': 'text/css'});
-            res.write(css);
-            res.end();
-        });
-    }
+app.post('/code_task', function(req, res){
+    let code_file = `${__dirname}/${code_dir}/code.c`;
+    let bin_file = `${__dirname}/${code_dir}/code`;
 
-    if (req.url.indexOf('frontend.js') !== -1) {
-        fs.readFile(__dirname + '/public/frontend.js', function(err, js) {
-            if (err) console.log(err)
-            res.writeHead(200, {'Content-Type': 'text/js'});
-            res.write(js);
-            res.end();
-        });
-    }
+    let user_program = '';
+    req.on('data', chunk => {
+        user_program += chunk;
+    });
+    req.on('end', () => {
+        user_program = JSON.parse(user_program)
+        console.log('Got user program: ' + user_program.code);
 
-    if (req.url.indexOf('editor.js') !== -1) {
-        fs.readFile(__dirname + '/public/editor.js', function(err, js) {
-            if (err) console.log(err)
-            res.writeHead(200, {'Content-Type': 'text/js'});
-            res.write(js);
-            res.end();
-        });
-    }
+        fs.writeFileSync(code_file, user_program.code, 'utf8')
 
-    if (req.url.indexOf('.png') !== -1) {
-        fs.readFile(__dirname + '/public/GitHub-Mark.png', function(err, img) {
-            if (err) console.log(err)
-            res.writeHead(200, {'Content-Type': 'image/png'});
-            res.write(img);
-            res.end();
-        });
-    }
+        compile_and_run(code_file, bin_file, user_program.input, res);
+    });
+})
 
-    if (req.url.indexOf('.php') !== -1) {
-        file_code = __dirname + '/executable_code/code.c';
-        file_bin = __dirname + '/executable_code/code';
-
-        let user_program = '';
-        req.on('data', chunk => {
-            user_program += chunk;
-        });
-        req.on('end', () => {
-            user_program = JSON.parse(user_program)
-            console.log('Got user program: ' + user_program.code);
-
-            fs.writeFileSync(__dirname + '/executable_code/code.c', user_program.code, 'utf8')
-
-            compile(file_code, file_bin, user_program.input, res);
-        });
-    }
-}).listen(3000);
+app.listen(port, () =>
+    console.log('Example app listening on port 3000!')
+)
