@@ -3,6 +3,32 @@ const app = express();
 const fs = require('fs')
 
 const { exec } = require('child_process');
+const port = 3000;
+const code_dir = 'executable_code'
+
+app.use(express.static('public'))
+
+app.post('/code_task', function(req, res){
+    let code_file = `${__dirname}/${code_dir}/code.c`;
+    let bin_file = `${__dirname}/${code_dir}/code`;
+
+    let user_program = '';
+    req.on('data', chunk => {
+        user_program += chunk;
+    });
+    req.on('end', () => {
+        user_program = JSON.parse(user_program)
+        console.log('Got user program: ' + user_program.code);
+
+        fs.writeFileSync(code_file, user_program.code, 'utf8')
+
+        compile_and_run(code_file, bin_file, user_program.input, res);
+    });
+})
+
+module.exports = app.listen(port, () =>
+    console.log('Example app listening on port 3000!')
+)
 
 function process_error(error, stderr, res) {
     let message;
@@ -55,30 +81,3 @@ function run_stub(file_bin, input, res) {
         res.end();
     });
 }
-
-const port = 3000;
-const code_dir = 'executable_code'
-
-app.use(express.static('public'))
-
-app.post('/code_task', function(req, res){
-    let code_file = `${__dirname}/${code_dir}/code.c`;
-    let bin_file = `${__dirname}/${code_dir}/code`;
-
-    let user_program = '';
-    req.on('data', chunk => {
-        user_program += chunk;
-    });
-    req.on('end', () => {
-        user_program = JSON.parse(user_program)
-        console.log('Got user program: ' + user_program.code);
-
-        fs.writeFileSync(code_file, user_program.code, 'utf8')
-
-        compile_and_run(code_file, bin_file, user_program.input, res);
-    });
-})
-
-app.listen(port, () =>
-    console.log('Example app listening on port 3000!')
-)
