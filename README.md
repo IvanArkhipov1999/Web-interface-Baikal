@@ -17,6 +17,6 @@ The following installation guide is fit for Ubuntu.
    ```
 3. Run the server
    ```
-   node server.js
+   npm start
    ```
 4. Access `localhost:3000` in your web browser to test the server. 
