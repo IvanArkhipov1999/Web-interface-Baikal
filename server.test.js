@@ -1,6 +1,6 @@
 const server = require('./server');
 const supertest = require('supertest')
-const request = supertest(server);
+const request = supertest.agent(server);
 
 const code = "#include <stdio.h>\n" +
     "\n" +
@@ -15,10 +15,34 @@ const code = "#include <stdio.h>\n" +
 const input = "Maxim";
 
 describe('/code_task endpoint', () => {
+    it('should fail to login', async () => {
+        const login = "admin"
+        const password = "111112111"
+        const response = await request
+            .post('/login')
+            .set('Connection', 'close')
+            .type('x-www-form-urlencoded')
+            .send(`login=${login}&password=${password}`)
+            .expect(302)
+            .expect('Location', '/login');
+    });
+    it('should login successfully', async () => {
+        const login = "admin"
+        const password = "11111111"
+        const response = await request
+            .post('/login')
+            .set('Connection', 'close')
+            .type('x-www-form-urlencoded')
+            .send(`login=${login}&password=${password}`)
+            .expect(302)
+            .expect('Location', '/code_task');
+    });
     it('should compile and execute properly', async () => {
+        const login = "admin"
+        const password = "11111111"
         const response = await request
             .post('/code_task')
-            .send({code, input});
+            .send({code, input})
         expect(response.status).toBe(200);
         expect(response.text).toBe('Hello, Maxim!');
     });
