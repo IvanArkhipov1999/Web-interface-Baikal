@@ -117,7 +117,7 @@ function process_error(error, stderr, res) {
 }
 
 function compile_and_run(file_code, file_bin, input, res) {
-    exec(`clang -static ${file_code} -o ${file_bin} -lm`, (error, stdout, stderr) => {
+    exec(`clang-11 --target=mipsel-linux-gnu -static ${file_code} -o ${file_bin} -lm`, (error, stdout, stderr) => {
         if (error || stderr) {
             process_error(error, stderr, res);
             return;
@@ -129,7 +129,7 @@ function compile_and_run(file_code, file_bin, input, res) {
 }
 
 function send_stub(file_bin, input, res) {
-    exec('echo place-your-sending-script-here', (error, stdout, stderr) => {
+    exec(`sshpass -p "" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -oKexAlgorithms=+diffie-hellman-group1-sha1 -q ${file_bin} root@baikal.softcom.su:/root/app`, (error, stdout, stderr) => {
         if (error || stderr) {
             process_error(error, stderr, res);
             return;
@@ -141,7 +141,7 @@ function send_stub(file_bin, input, res) {
 }
 
 function run_stub(file_bin, input, res) {
-    exec(`${file_bin} ${input}`, (error, stdout, stderr) => {
+    exec(`sshpass -p "" ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -oKexAlgorithms=+diffie-hellman-group1-sha1 -q root@baikal.softcom.su "/root/app ${input}" `, (error, stdout, stderr) => {
         if (error || stderr) {
             process_error(error, stderr, res);
             return;
