@@ -10,12 +10,13 @@ The following installation guide is fit for Ubuntu.
    ```
    git clone https://github.com/IvanArkhipov1999/Web-interface-Baikal.git
    ```
-2. Install apache http server with php support:
-    ```
-    sudo apt-get install -y apache2 php libapache2-mod-php
-    ```
-   1. Deploy the server sources:
-       ```
-       sudo cp -r <path/to/Web-interface-Baikal>/interface/* /var/www/html
-       ```
-3. Access `localhost` in your web browser to test the server. 
+   
+2. Install Node.js
+   ```
+   sudo apt install nodejs
+   ```
+3. Run the server
+   ```
+   npm start
+   ```
+4. Access `localhost:3000` in your web browser to test the server. 

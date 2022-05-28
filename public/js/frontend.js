@@ -1,4 +1,4 @@
-const backendUrl = 'php/backend.php'
+const backendUrl = '/code_task'
 
 function assembleRequestContent() {
     codeEditor.save();
