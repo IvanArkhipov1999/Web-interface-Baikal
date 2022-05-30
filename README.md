@@ -13,7 +13,7 @@ The following installation guide is fit for Ubuntu.
    
 2. Install Node.js
    ```
-   sudo apt install nodejs
+   sudo apt install nodejs npm
    ```
 3. Run the server
    ```
