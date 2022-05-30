@@ -11,9 +11,11 @@ The following installation guide is fit for Ubuntu.
    git clone https://github.com/IvanArkhipov1999/Web-interface-Baikal.git
    ```
    
-2. Install Node.js
+2. Install Node.js and libraries
    ```
-   sudo apt install nodejs npm
+   sudo apt update
+   sudo apt install nodejs npm yarn
+   yarn install
    ```
 3. Run the server
    ```
